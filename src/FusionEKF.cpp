@@ -201,18 +201,18 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
     // Bearing
     double theta = atan(ekf_.x_[1] / ekf_.x_[0]);
     // Rate
-    double rhodot = ((ekf_.x_[0] * ekf_.x_[2] + ekf_.x_[1] * ekf_.x_[3]) / (sqrt(pow(ekf_.x_[0], 2) + pow(ekf_x_[1], 2))));
+    double rho_rate = ((ekf_.x_[0] * ekf_.x_[2] + ekf_.x_[1] * ekf_.x_[3]) / (sqrt(pow(ekf_.x_[0], 2) + pow(ekf_x_[1], 2))));
 
-    MatrixXd z(3, 1);
-    z << rho, theta, rhodot;
+    MatrixXd pred(3, 1);
+    pred << rho, theta, rho_rate;
 
-    ekf_.UpdateEKF(measurement_pack.raw_measurements_, z)
+    ekf_.UpdateEKF(measurement_pack.raw_measurements_, pred)
 
   } else {
     // Laser updates
     ekf_.R_ = R_laser_;
     ekf_.H_ = H_laser;
-    
+
     ekf_.Update(measurement_pack.raw_measurements_);
 
   }
