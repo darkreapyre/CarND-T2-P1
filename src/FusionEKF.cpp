@@ -110,8 +110,10 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
     if (measurement_pack.sensor_type_ == MeasurementPackage::RADAR) {
     
       // Convert radar from polar to cartesian coordinates and initialize state.
-      float rho = measurement_pack.raw_measurements_(0); // range
-      float theta = measurement_pack.raw_measurements_(1); // bearing
+      // Range
+      float rho = measurement_pack.raw_measurements_(0);
+      // Bearing
+      float theta = measurement_pack.raw_measurements_(1);
       ax = cos(theta) * rho;
       ay = sin(theta) * rho;
 
@@ -194,9 +196,13 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
     ekf_.H_ = Hj_;
     ekf.R_ = R_radar_;
 
-    double rho = sqrt(pow(ekf_.x_[0], 2) + pow(ekf_.x_[1], 2)); // range
-    double theta = atan(ekf_.x_[1] / ekf_.x_[0]); // bearing
-    double rhodot = ((ekf_.x_[0] * ekf_.x_[2] + ekf_.x_[1] * ekf_.x_[3]) / (sqrt(pow(ekf_.x_[0], 2) + pow(ekf_x_[1], 2)))); // rate
+    // Range
+    double rho = sqrt(pow(ekf_.x_[0], 2) + pow(ekf_.x_[1], 2));
+    // Bearing
+    double theta = atan(ekf_.x_[1] / ekf_.x_[0]);
+    // Rate
+    double rhodot = ((ekf_.x_[0] * ekf_.x_[2] + ekf_.x_[1] * ekf_.x_[3]) / (sqrt(pow(ekf_.x_[0], 2) + pow(ekf_x_[1], 2))));
+
     MatrixXd z(3, 1);
     z << rho, theta, rhodot;
 
@@ -206,8 +212,7 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
     // Laser updates
     ekf_.R_ = R_laser_;
     ekf_.H_ = H_laser;
-
-    // Update covariance matrices
+    
     ekf_.Update(measurement_pack.raw_measurements_);
 
   }
