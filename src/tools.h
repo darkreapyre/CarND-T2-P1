@@ -2,7 +2,6 @@
 #define TOOLS_H_
 
 #include <vector>
-#include <iostream>
 #include "Eigen/Dense"
 
 class Tools {
