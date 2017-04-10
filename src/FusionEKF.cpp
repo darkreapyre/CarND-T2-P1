@@ -21,26 +21,6 @@ FusionEKF::FusionEKF() {
   R_radar_ = MatrixXd(3, 3);
   H_laser_ = MatrixXd(2, 4);
   Hj_ = MatrixXd(3, 4);
-//  ekf_.P_ = MatrixXd(4, 4);
-
-//  // measurement covariance matrix - laser
-//  R_laser_ << 0.0225, 0,
-//              0, 0.0225;
-
-//  // measurement covariance matrix - radar
-//  R_radar_ << 0.09, 0, 0,
-//              0, 0.0009, 0,
-//              0, 0, 0.09;
-
-//  // state covarience matrix P
-//  ekf_.P_ << 1, 0, 0, 0,
-//             0, 1, 0, 0,
-//             0, 0, 1000, 0,
-//             0, 0, 0, 1000;
-  
-//  // H_laser matrix
-//  H_laser << 1, 0, 0, 0,
-//        0, 1, 0, 0;
 }
 
 /**
@@ -57,7 +37,6 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
   if (!is_initialized_) {
 
     // Initialize state variables x
-    //cout << "FusionEKF: " << endl;
     ekf_.x_ = VectorXd(4);
     ekf_.x_ << 1, 1, 1, 1;
 
@@ -130,8 +109,6 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
       }
 
       ekf_.x_ << measurement_pack.raw_measurements_[0], measurement_pack.raw_measurements_[1], 0, 0;
-      //ekf_.x_ << measurement_pack.raw_measurements_(0),
-      //  measurement_pack.raw_measurements_(1), 1, 1;
     }
 
     // done initializing, no need to predict or update
@@ -159,29 +136,6 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
   /*****************************************************************************
    *  Prediction
    ****************************************************************************/
-
-//  float noise_ax = 9;
-//  float noise_ay = 9;
-//  // Time is measured in seconds
-//  float delta_t1 = (measurement_pack.timestamp_ - previous_timestamp_) / 1000000.0;
-//  //previous_timestamp_ = measurement_pack.timestamp_;
-//  float delta_t2 = delta_t1 * delta_t1;
-//  float delta_t3 = delta_t2 * delta_t1;
-//  float delta_t4 = delta_t3 * delta_t1;
-
-//  // F Matrix
-//  ekf.F_ = MatrixXd(4, 4);
-//  ekf.F_ << 1, 0, delta_t1, 0,
-//            0, 1, 0, delta_t1,
-//            0, 0, 1, 0,
-//            0, 0, 0, 1;
-  
-//  // Q Matrix
-//  ekf.Q_ = MatrixXd(4, 4);
-//  ekf.Q_ << delta_t4 / 4 * noise_ax, 0, delta_t3 / 2 * noise_ax, 0,
-//            0, delta_t4 / 4 * noise_ay, 0, delta_t3 / 2 * noise_ay,
-//            delta_t3 / 2 * noise_ax, 0, delta_t2 * noise_ax, 0,
-//            0, delta_t3 / 2 * noise_ay, 0, detlat_t2 * noise_ay;
   
       ekf_.Predict();
     }
