@@ -73,7 +73,7 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
     ekf_.P_ << 1, 0, 0, 0,
                0, 1, 0, 0,
                0, 0, 1, 0,
-               0, 0, 0, 1:
+               0, 0, 0, 1;
 
     // Initialize matrix Q
     ekf_.Q_ = MatrixXd(4, 4);
@@ -87,15 +87,15 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
     noise_ay = 9;
 
     // Initialize laser measurement covairance matrix R_laser
-    R_laser << 0.0225, 0,
+    R_laser_ << 0.0225, 0,
                0, 0.0225;
 
     // Initialiae laser H Matrix
-    H_laser << 1, 0, 0, 0,
+    H_laser_ << 1, 0, 0, 0,
                0, 1, 0, 0;
 
     // Initilize radar measurement covariane matrix R_radar
-    R_radar << 0.09, 0, 0,
+    R_radar_ << 0.09, 0, 0,
                0, 0.0009, 0,
                0, 0, 0.09;
 
@@ -114,8 +114,8 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
       float rho = measurement_pack.raw_measurements_(0);
       // Bearing
       float theta = measurement_pack.raw_measurements_(1);
-      ax = cos(theta) * rho;
-      ay = sin(theta) * rho;
+      float ax = cos(theta) * rho;
+      float ay = sin(theta) * rho;
 
       if ( (ax == 0) || ( ay == 0) ){
         return;
@@ -194,24 +194,24 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
     // Radar updates
     Hj_ = tools.CalculateJacobian(ekf_.x_);
     ekf_.H_ = Hj_;
-    ekf.R_ = R_radar_;
+    ekf_.R_ = R_radar_;
 
     // Range
     double rho = sqrt(pow(ekf_.x_[0], 2) + pow(ekf_.x_[1], 2));
     // Bearing
     double theta = atan(ekf_.x_[1] / ekf_.x_[0]);
     // Rate
-    double rho_rate = ((ekf_.x_[0] * ekf_.x_[2] + ekf_.x_[1] * ekf_.x_[3]) / (sqrt(pow(ekf_.x_[0], 2) + pow(ekf_x_[1], 2))));
+    double rho_rate = ((ekf_.x_[0] * ekf_.x_[2] + ekf_.x_[1] * ekf_.x_[3]) / (sqrt(pow(ekf_.x_[0], 2) + pow(ekf_.x_[1], 2))));
 
     MatrixXd pred(3, 1);
     pred << rho, theta, rho_rate;
 
-    ekf_.UpdateEKF(measurement_pack.raw_measurements_, pred)
+    ekf_.UpdateEKF(measurement_pack.raw_measurements_, pred);
 
   } else {
     // Laser updates
     ekf_.R_ = R_laser_;
-    ekf_.H_ = H_laser;
+    ekf_.H_ = H_laser_;
 
     ekf_.Update(measurement_pack.raw_measurements_);
 
