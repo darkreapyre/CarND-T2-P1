@@ -63,6 +63,34 @@ for instructions and the project rubric.
 
 ## IDE Profile
 
-__Visual Studio Code__ is used for this project. For more infomraiton ont he __IDE Profile__, see the `id_profiles` directory.
+__Visual Studio Code__ is used for this project. For more infomraiton on the __IDE Profile__, see the `\id_profiles` directory.
 
 ## Results
+
+After compiling and running the *ExtendedKF* utility on the `../data/sample-laser-radar-measurement-data-1.txt` file, the __RMSE__ results are as follows:
+
+| __RMSE__ | __Result__ |
+| --- | :---: |
+| __px__ | 0.0651795 |
+| __py__ | 0.0605726 |
+| __vx__ | 0.544212 |
+| __vy__ | 0.544226 |
+
+![data-1 results](img/results-data-1.png)
+
+After running the *ExtendedKF* utility on the `../data/sample-laser-radar-measurement-data-2.txt` file, the __RMSE__ results are as follows:
+
+| __RMSE__ | __Result__ |
+| --- | :---: |
+| __px__ | 0.209074 |
+| __py__ | 0.214979 |
+| __vx__ | 0.509495 |
+| __vy__ | 0.811499 |
+
+![data-2 results](img/results-data-2.png)
+
+> __Note:__ The above visualizations were generated using the __CarND-Mercedes-SF-Utilities__ in the `\utils` directory.
+
+
+
+
