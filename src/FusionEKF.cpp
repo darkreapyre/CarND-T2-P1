@@ -59,7 +59,7 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
     // Initialize state variables x
     //cout << "FusionEKF: " << endl;
     ekf_.x_ = VectorXd(4);
-    ekf_.x_ = 1, 1, 1, 1;
+    ekf_.x_ << 1, 1, 1, 1;
 
     // Initialize transition matrix F
     ekf_.F_ = MaxtrixXd(4, 4);
