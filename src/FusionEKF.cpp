@@ -121,7 +121,7 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
         return;
       }
 
-      ekf_.x_ = ax, ay, 0, 0;
+      ekf_.x_ << ax, ay, 0, 0;
     }
     else if (measurement_pack.sensor_type_ == MeasurementPackage::LASER) {
 
