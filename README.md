@@ -82,10 +82,10 @@ After running the *ExtendedKF* utility on the `../data/sample-laser-radar-measur
 
 | __RMSE__ | __Result__ |
 | --- | :---: |
-| __px__ | 0.209074 |
-| __py__ | 0.214979 |
-| __vx__ | 0.509495 |
-| __vy__ | 0.811499 |
+| __px__ | 0.183608 |
+| __py__ | 0.190305 |
+| __vx__ | 0.499585 |
+| __vy__ | 0.805314 |
 
 ![data-2 results](img/results-data-2.png)
 
